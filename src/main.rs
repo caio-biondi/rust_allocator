@@ -89,7 +89,7 @@ fn find_free_best_fit(size: usize, found: &mut *mut Node, previous: &mut *mut No
     let mut prev: *mut Node = std::ptr::null_mut();
 
     let mut best_fit: Option<(*mut Node, usize)> = None; //keeps track of best fit node
-    let mut best_fit_prev: Option<(*mut Node, usize)> = None; //keeps track of node previous to best_fit
+    let mut best_fit_prev: *mut Node = std::ptr::null_mut(); //keeps track of node previous to best_fit
 
     // Iterate over the free list
     while !curr.is_null() {
@@ -100,6 +100,7 @@ fn find_free_best_fit(size: usize, found: &mut *mut Node, previous: &mut *mut No
 
             if best_fit.is_none() || remaining_size < best_fit.unwrap().1 {
                 best_fit = Some((curr, remaining_size));
+                best_fit_prev = prev;
             }
         }
 
