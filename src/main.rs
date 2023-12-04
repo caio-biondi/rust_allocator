@@ -54,7 +54,7 @@ fn number_of_free_nodes() -> u32 {
     return count;
 }
 
-// Finds a node on the free list that has enough available memory to allocate to a calling program.
+// Finds a node on the free list that has enough available memory to allocate to a calling program according to first-fit.
 fn find_free(size: usize, found: & mut *mut Node, previous: & mut *mut Node) {
     // Size of Node must be able to accommodate size in bytes plus the size of Header
     let actual_size = size + std :: mem :: size_of :: <Header>();
@@ -77,6 +77,43 @@ fn find_free(size: usize, found: & mut *mut Node, previous: & mut *mut Node) {
         }
         prev = curr;
         curr = unsafe{ (*curr).next };
+    }
+}
+
+// Finds a node on the free list that has enough available memory to allocate to a calling program according to best-fit.
+fn find_free_best_fit(size: usize, found: &mut *mut Node, previous: &mut *mut Node) {
+
+    let actual_size = size + std::mem::size_of::<Header>();
+
+    let mut curr: *mut Node = unsafe { HEAD };
+    let mut prev: *mut Node = std::ptr::null_mut();
+
+    let mut best_fit: Option<(*mut Node, usize)> = None; //keeps track of best fit node
+    let mut best_fit_prev: *mut Node = std::ptr::null_mut(); //keeps track of node previous to best_fit
+
+    // Iterate over the free list
+    while !curr.is_null() {
+
+        // check if node is complete according to best fit
+        if unsafe { (*curr).size } >= actual_size {
+            let remaining_size = unsafe { (*curr).size } - actual_size;
+
+            if best_fit.is_none() || remaining_size < best_fit.unwrap().1 {
+                best_fit = Some((curr, remaining_size));
+                best_fit_prev = prev;
+            }
+        }
+
+        prev = curr;
+        curr = unsafe { (*curr).next };
+    }
+
+    if let Some((best_fit_node, _)) = best_fit {
+        *found = best_fit_node; // Return a pointer to node
+
+        if !prev.is_null() {
+            *previous = best_fit_prev;
+        }
     }
 }
 
