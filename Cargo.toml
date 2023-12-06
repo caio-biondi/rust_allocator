@@ -1,5 +1,5 @@
 [package]
-name = "hello-rust"
+name = "rust_allocator"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,4 +7,3 @@ edition = "2021"
 
 [dependencies]
 libc = "0.2.150"
-mmap = "0.1.1"
