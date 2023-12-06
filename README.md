@@ -10,7 +10,7 @@ rust-allocator
 ├── Cargo.toml
 └── src
     ├── main.rs
-    └── my_malloc~.rs.bak
+    └── my_malloc.rs
 ```
 
 - `Cargo.lock` and `Cargo.toml` contain information about the dependencies.
