@@ -5,7 +5,7 @@ This repo contains a basic malloc/free allocator implemented in Rust. Project fi
 ## Project Organization
 
 ```bash
-rust-allocator
+rust_allocator
 ├── Cargo.lock
 ├── Cargo.toml
 └── src
@@ -25,13 +25,13 @@ This project requires [Rust](https://www.rust-lang.org) to run.
 You can clone this repo using
 
 ```sh
-git clone https://github.com/caio-biondi/rust-allocator.git
+git clone https://github.com/caio-biondi/rust_allocator.git
 ```
 
 Then you can `cd` to the directory you just cloned:
 
 ```sh
-cd rust-allocator
+cd rust_allocator
 ```
 
 Build and run the project:
